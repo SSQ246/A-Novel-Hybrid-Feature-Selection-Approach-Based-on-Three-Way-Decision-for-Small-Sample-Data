@@ -79,6 +79,7 @@ f1 <- function(fea,result){
 }
 dat <- cbind(r,mfeat_zer,mfeat_pix,mfeat_mor,mfeat_kar,mfeat_fou,mfeat_fac)
 colnames(dat) <- c("r",paste0("x",1:(ncol(dat)-1)))
+#此处修改训练集大小
 testIndex <- caret::createDataPartition(dat$r, p = 0.9, list = FALSE, times = 1)
 testData <- dat[testIndex, ]
 x_test <- testData[, -1]
@@ -200,6 +201,7 @@ etime - stime
 
 
 #三支决策
+#仅保留需要混合的方法
 stime <- Sys.time()
 fea_1 <- c()#fea_re[1:acc_re[1]]  
 fea_2 <- fea_ran[1:acc_ran[1]] 
@@ -238,6 +240,7 @@ a_i <- 0
 a_j <- 0
 p <- 0
 fea <- hebing_ma[1:length(fea_he),1]
+#阈值设置
 count <- length(which(hebing_ma[,2] > 1.5))
 num_he <- length(which(hebing_ma[,2] > 0.8))
 num_dan <- max(max(which(hebing_ma[,1] %in% fea_6)),num_he)
