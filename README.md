@@ -1,0 +1,1 @@
+The code corresponding to the experiment is shown in the title. The three methods and three-way decision thresholds selected in the experiment need to be modified by yourself. The change in the number of training set samples in Experiment 2 requires modifying the proportion of the caret:: creatDataMartition function.
