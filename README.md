@@ -1,4 +1,4 @@
 This code can be run using Rstudio and the packages used include: caret, e1071，randomForest，Boruta，glmnet，mlr，mlr3verse，dplyr，ranger，infotheo.
-Ma.csv is the data used in Experiment 3, and the Multiple Feastures dataset in the UCI repository can be found at the following link: https://archive.ics.uci.edu/dataset/72/multiple +features.
+Ma.csv is the data used in Experiment 3, and The Multiple Features (mfea -) dataset is sourced from the UCI repository, and the following is the original website: https://archive.ics.uci.edu/dataset/72/multiple +features.
 Please note that in the Multiple Features dataset, the first 200 patterns are of class '0', followed by sets of 200 patterns for each of the classes '1' - '9'. 
 The title displays the code corresponding to the experiment. The three methods and three-way decision threshold selected in the experiment can be modified as needed. The change in the number of training set samples in Experiment 2 requires modifying the proportion of the caret:: breakdataMartition function.
