@@ -1,4 +1,4 @@
-#训练集
+#Read the dataset
 library(caret)
 mfeat_zer <- read.table('C:\\Users\\QAQ\\Desktop\\r\\0-9分类\\mfeat-zer')
 mfeat_pix <- read.table('C:\\Users\\QAQ\\Desktop\\r\\0-9分类\\mfeat-pix')
@@ -12,7 +12,7 @@ set.seed(1)
 library(e1071)
 library(randomForest)
 library(Boruta)
-#定义函数svm
+#defined function svm
 svm_fun <- function(a,b,c,d,e){
   x_fun <- e[,a]
   svm_fun <- svm(x_fun, b)
@@ -28,7 +28,7 @@ svm_fun <- function(a,b,c,d,e){
   accuracy <- a/nrow(c)
   return(accuracy)
 }
-#交叉验证
+#cross validation
 cv_re <- function(fea,td){
   p <- 0
   k <- 5
@@ -47,7 +47,7 @@ cv_re <- function(fea,td){
   }
   return(p/k)
 }
-#定义函数best
+#Define the function 'best' to select a subset of features
 best <- function(sorted_fea,td){
   aa <- 1
   p <- 0
@@ -62,7 +62,7 @@ best <- function(sorted_fea,td){
   pp <- c(aa,p)
   return(pp)
 }
-#定义函数f1
+#Define function f1 and calculate its value
 f1 <- function(fea,result){
   f1_p <- 0
   f1_r <- 0
@@ -79,7 +79,7 @@ f1 <- function(fea,result){
 }
 dat <- cbind(r,mfeat_zer,mfeat_pix,mfeat_mor,mfeat_kar,mfeat_fou,mfeat_fac)
 colnames(dat) <- c("r",paste0("x",1:(ncol(dat)-1)))
-#此处修改训练集大小
+#Modify the size of the training set here
 testIndex <- caret::createDataPartition(dat$r, p = 0.9, list = FALSE, times = 1)
 testData <- dat[testIndex, ]
 x_test <- testData[, -1]
@@ -108,7 +108,7 @@ etime - stime
 
 
 
-#相关系数
+#correlation coefficient
 stime <- Sys.time()
 library(mlr)
 myFUN <- function(x){cor(x,Data[,1])}
@@ -127,7 +127,7 @@ etime - stime
 
 
 
-#基于特征重要性的过滤法
+#Impurity
 stime <- Sys.time()
 library(mlr3verse)
 library(dplyr)
@@ -150,7 +150,7 @@ etime - stime
 
 
 
-#互信息
+#Mutual Information
 stime <- Sys.time()
 library(infotheo)
 x_inf <- discretize(Data[,2:650],"equalfreq",10)
@@ -165,7 +165,7 @@ etime <- Sys.time()
 etime - stime
 
 
-#森林之神
+#Boruta
 stime <- Sys.time()
 boruta <- Boruta(r~., data=Data)
 bo_li <- attStats(boruta)
@@ -177,7 +177,7 @@ etime <- Sys.time()
 etime - stime
 
 
-#随机森林
+#Random Forest
 stime <- Sys.time()
 rf <- randomForest(r~., data=Data, importance=TRUE, proximity=TRUE,type="classification") 
 ran <- round(randomForest::importance(rf), 2)
@@ -200,8 +200,8 @@ etime - stime
 
 
 
-#三支决策
-#仅保留需要混合的方法
+#H-TwD
+#Only the methods that need to be mixed are retained here
 stime <- Sys.time()
 fea_1 <- c()#fea_re[1:acc_re[1]]  
 fea_2 <- fea_ran[1:acc_ran[1]] 
@@ -240,7 +240,7 @@ a_i <- 0
 a_j <- 0
 p <- 0
 fea <- hebing_ma[1:length(fea_he),1]
-#阈值设置
+#Set feature weight threshold here
 count <- length(which(hebing_ma[,2] > 1.5))
 num_he <- length(which(hebing_ma[,2] > 0.8))
 num_dan <- max(max(which(hebing_ma[,1] %in% fea_6)),num_he)
@@ -251,7 +251,7 @@ length(fea)
 etime <- Sys.time()
 etime - stime
 
-#无相关性检验
+#H-TwD
 stime <- Sys.time()
 p_re <- 0
 i <- count
